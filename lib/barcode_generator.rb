@@ -39,8 +39,10 @@ module ActionView
         bc.xoff   = options[:xoff]           if options[:xoff]
         bc.yoff   = options[:yoff]           if options[:yoff]
         bc.margin = options[:margin]         if options[:margin]
-        Gbarcode.barcode_encode(bc, options[:encoding_format])
-        
+        if Gbarcode.barcode_encode(bc, options[:encoding_format]) == -1
+          return
+        end
+ 
         if options[:no_ascii]
           print_options = Gbarcode::BARCODE_OUT_EPS|Gbarcode::BARCODE_NO_ASCII
         else
